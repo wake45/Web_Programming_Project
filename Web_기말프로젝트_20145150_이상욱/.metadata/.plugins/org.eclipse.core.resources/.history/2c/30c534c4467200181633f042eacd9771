@@ -1,0 +1,29 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<jsp:useBean id="findpassword" class="Info.Member" scope="page"/>
+<jsp:useBean id="dbconnect" class="Info.DBConnection" scope="page"/>
+<jsp:setProperty name="findpassword" property="*"/>
+ 
+<%
+	String str = null;
+	if( (str = dbconnect.findPwd(findpassword.getId(),findpassword.getName(),findpassword.getNumber())) != null){
+		session.setAttribute("findpassword",str);
+		out.print("<center>");
+		out.print("비밀번호 : " + str);		
+		out.print("<br><a href=login.html>로그인 페이지로 이동</a>");
+	}
+	else{
+		out.print("<center>");
+		out.print("찾으시는 비밀번호가 존재 하지않습니다.");
+		out.print("<br><a href=login.html>로그인 페이지로 이동</a>");
+	}
+%>
+</body>
+</html>

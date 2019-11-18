@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<form method=post action=insert.jsp>
+	<table border=collapse>
+		<tr>
+			<td align="center">과목
+			<td> <input type=text name=subject>
+			<td rowspan="4" align="center"><input type=submit value=insert style="height: 110px;"></td>
+		<tr>
+			<td align="center">요일
+			<td> <input type=text name=day>
+		<tr>
+			<td align="center">시간
+			<td> <input type=text name=time>
+		<tr>
+			<td align="center">강의실
+			<td> <input type=text name=classroom>
+		</tr>
+	</table>
+</form>
+</body>
+</html>

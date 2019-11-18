@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<form method=post action=login.jsp>
+	<table border=collapse>
+		<tr>
+		
+		</tr>
+		
+	</table>
+	<a href="insert.html">수강 강좌 입력</a>
+</form>
+</body>
+</html>

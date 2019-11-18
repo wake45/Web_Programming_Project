@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>로그인 페이지</h1>
+<form method=post action=login.jsp>
+	<center>
+	<table border=collapse>
+		<tr>
+			<td align="center">ID
+			<td> <input type=text name=id>
+			<td rowspan="2" align="center"><input type=submit value=Login style="height: 50px;"></td>
+		<tr>
+			<td align="center">패스워드
+			<td><input type=password name=password>
+			
+		<tr>	
+		<tr>
+			<td colspan="4" align="center">
+			<a href="regist.html">회원가입</a>
+			<a href="findId.html">ID 찾기</a>
+			<a href="findPwd.html">Pwd 찾기</a>
+		</tr>
+	</table>
+	</center>
+</form>
+</body>
+</html>

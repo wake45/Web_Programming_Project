@@ -1,0 +1,105 @@
+package classes;
+
+import java.sql.*;
+
+public class DBConnection {
+	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	private static final String JDBC_URL = "jdbc:mysql://localhost:3306/webdb?characterEncoding=UTF-8&serverTimezone=UTC";
+	private static final String USER = "root";
+	private static final String PASSWD = "1234";
+	
+
+	private Connection con = null;
+	private PreparedStatement pstmt = null;	
+	
+	public DBConnection() {
+		try {
+			Class.forName(JDBC_DRIVER);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void connect() {
+		try{
+			con = DriverManager.getConnection(JDBC_URL, USER, PASSWD);
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
+	}
+	
+	public String[][] tableMember(String inf[][]) {
+		
+		connect();
+		String sql = "select * from class";
+		ResultSet rs = null;
+		int i = 0;
+		int j = 0;
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery(sql);
+
+			while(rs.next()) {
+				inf[i][j++] = rs.getString(1);
+				inf[i][j++] = rs.getString(2);
+				inf[i][j++] = rs.getString(3);
+				inf[i][j++] = rs.getString(4);
+				inf[i++][j] = rs.getString(5);
+				j = 0;
+			}
+			
+			for(j = 0 ; j < 5 ; j++) {
+				inf[i][j] = null;
+			}
+			
+			rs.close();
+			disconnection();
+			
+			return inf;
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	public boolean insertMember(Info inf) {
+		boolean success = true;
+		connect();
+		String sql = "insert into class values(?, ?, ?, ?,?)";
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, inf.getName());
+			pstmt.setString(2, inf.getSubject());
+			pstmt.setString(3, inf.getDay());
+	        pstmt.setString(4, inf.getTime());
+	        pstmt.setString(5, inf.getClassroom());
+	        pstmt.executeUpdate();
+	        
+			disconnection();
+	        return success;
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return !success;
+		}
+	}
+	
+	public void disconnection() {
+		if(pstmt != null) {
+			try {
+				pstmt.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if(con != null) {
+			try {
+				con.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
+

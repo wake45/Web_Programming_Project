@@ -1,0 +1,150 @@
+package Info;
+
+import java.sql.*;
+
+public class DBConnection {
+	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	private static final String JDBC_URL = "jdbc:mysql://localhost:3306/webdb?characterEncoding=UTF-8&serverTimezone=UTC";
+	private static final String USER = "root";
+	private static final String PASSWD = "1234";
+	
+
+	private Connection con = null;
+	private PreparedStatement pstmt = null;	
+	
+	public DBConnection() {
+		try {
+			Class.forName(JDBC_DRIVER);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void connect() {
+		try{
+			con = DriverManager.getConnection(JDBC_URL, USER, PASSWD);
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
+	}
+	
+	public boolean isMember(String id, String pwd) {
+		boolean success = false;
+		connect();
+		String sql = "select * from member";
+		ResultSet information = null;
+		
+		try { 
+			pstmt = con.prepareStatement(sql);
+			information = pstmt.executeQuery(sql);
+			
+			while(information.next()) {
+				if(id.equals(information.getString(1)) && pwd.equals(information.getString(2))) {	
+					success = true;
+				}
+			}
+			
+			information.close();
+			disconnection();
+			
+			return success;
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return success;
+		}
+	}
+	
+	public String findId(String name, String number) {
+		connect();
+		String sql = "select * from member where name=? and number=?";
+		ResultSet information=null;
+		String str = null;
+		try { 
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, number);
+			information = pstmt.executeQuery();
+
+			while(information.next()) {
+					str = information.getString(1);
+			}
+			
+			information.close();
+			disconnection();
+			
+			return str;
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public String findPwd(String id ,String name, String number) {
+		connect();
+		String sql = "select * from member where id=? and name=? and number=?";
+		ResultSet information = null;
+		String str = null;
+		try { 
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, name);
+			pstmt.setString(3, number);
+			information = pstmt.executeQuery();
+			
+			while(information.next()) {
+					str = information.getString(2);
+			}
+			
+			information.close();
+			disconnection();
+			
+			return str;
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public boolean insertMember(Member mem) {
+		boolean success = true;
+
+		connect();
+		String sql = "insert into member values(?, ?, ?, ?)";
+
+		try {
+			pstmt = con.prepareStatement(sql);
+
+			
+			pstmt.setString(1, mem.getId());
+			pstmt.setString(2, mem.getPassword());
+			pstmt.setString(3, mem.getName());
+			pstmt.setString(4, mem.getNumber());
+			pstmt.executeUpdate();
+
+
+			disconnection();
+	        return success;
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return !success;
+		}
+	}
+	
+	public void disconnection() {
+		if(pstmt != null) {
+			try {
+				pstmt.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if(con != null) {
+			try {
+				con.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}

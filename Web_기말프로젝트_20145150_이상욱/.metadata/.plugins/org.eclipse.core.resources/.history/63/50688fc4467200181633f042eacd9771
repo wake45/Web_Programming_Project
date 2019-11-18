@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<form method=post action=findId.jsp>
+<center>
+<h1>아이디 찾기 페이지</h1>	
+	<table border=collapse>
+		<tr>
+			<td align="center">이름
+			<td><input type=text name=name>
+			<td rowspan="2" align="center"><input type=submit value=find style="height: 50px;"></td>
+		<tr>
+		 	<td align="center">휴대전화번호
+			<td><input type=text name=number>
+		<tr>
+	<td colspan="4" align="center">
+	<a href="login.html">돌아가기</a>
+	</tr>
+	</table>
+</center>
+</form>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<form method=post action=login.jsp>
+	<table border=collapse>
+		<tr>
+			<td align="center">ID
+			<td> <input type=text name=id>
+			<td rowspan="4" align="center"><input type=submit value=Login style="height: 110px;"></td>
+		<tr>
+			<td align="center">패스워드
+			<td><input type=password name=password>
+		<tr>
+			<td align="center">이름
+			<td><input type=text name=name>
+		<tr>
+		 	<td align="center">휴대전화번호
+			<td><input type=text name=number>
+		<tr>
+	<td colspan="4" align="center">
+	<a href="login.html">돌아가기</a>
+	</tr>
+	</table>
+</body>
+</html>

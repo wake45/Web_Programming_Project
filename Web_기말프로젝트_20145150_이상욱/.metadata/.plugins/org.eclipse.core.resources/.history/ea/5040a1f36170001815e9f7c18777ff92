@@ -1,0 +1,59 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR" import="java.sql.*" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<jsp:useBean id="class_" class="classes.Info" scope="page"/>
+<jsp:useBean id="dbconnect" class="classes.DBConnection" scope="page"/>
+<jsp:setProperty name="class_" property="*"/>
+	<table width="100%" border=collapse>
+	<tr>
+		<td>과목
+		<td>요일
+		<td>시간
+		<td>강의실		
+	</tr>
+	<%
+
+	String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	String JDBC_URL = "jdbc:mysql://localhost:3306/class?characterEncoding=UTF-8&serverTimezone=UTC";
+	String USER = "root";
+	String PASSWD = "1234";
+
+	Connection conn=null;
+	PreparedStatement pstmt=null;
+	ResultSet rs=null;
+	int i = 0;
+
+	try{
+
+		conn=DriverManager.getConnection(JDBC_URL,USER ,PASSWD);
+
+ 		String sql= "select * from Info";
+
+		pstmt=conn.prepareStatement(sql);
+
+		rs=pstmt.executeQuery(sql);
+		rs.next();
+		%>
+		<tr>
+			<td> <%= rs.getString("subject") %>
+			<td> <%= rs.getString("day") %>
+			<td> <%= rs.getString("time") %>
+			<td> <%= rs.getString("classroom")%>
+		</tr>
+		<%
+		}catch(Exception e){ 
+		e.printStackTrace();
+	}
+	%>
+	
+	</table>
+	<a href="logout.html">로그아웃</a>
+	<a href="insert.html">수강 강좌 입력</a>
+</body>
+</html>
